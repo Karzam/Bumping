@@ -1,29 +1,42 @@
-import { Sprite, Loader } from 'pixi.js';
+import { Body, Bodies, Constraint, World, Vector } from 'matter-js';
+import Game from './game';
 
-export default class Bumper extends Sprite
+export default class Bumper
 {
-  private isDragged: boolean;
+  public body: Body;
 
-  constructor() {
-    super();
+  private constraint: Constraint;
 
-    this.texture = Loader.shared.resources['assets/bumper.png'].texture;
-    this.scale.set(0.4, 0.4);
-    this.anchor.set(0.5, 0.5);
-    this.interactive = true;
-    this.buttonMode = true;
-
-    this.on('pointerdown', this.onDragStart);
-    this.on('pointermove', this.onDragging);
-    this.on('pointerup', this.onDragEnd);
+  constructor(position: Vector) {
+    this.body = Bodies.circle(100, 100, 20, {
+      restitution: 1,
+      frictionAir: 0.02,
+      position,
+      collisionFilter: { category: 0x0001, mask: 0x0002, group: 1 },
+      render: { fillStyle: '#079992' },
+    });
   }
 
-  private onDragStart(): void {
+  public drag(): void {
+    const { position } = this.body;
+
+    this.body.isSensor = true;
+
+    const pointA: Vector = Vector.create(position.x, position.y);
+
+    this.constraint = Constraint.create({
+      pointA,
+      bodyB: this.body,
+      type: 'line',
+      render: { strokeStyle: '#079992', type: 'line' },
+      stiffness: 0.01,
+    });
+
+    World.add(Game.getInstance().world, this.constraint);
   }
 
-  private onDragging(): void {
-  }
-
-  private onDragEnd(): void {
+  public release(): void {
+    this.body.isSensor = false;
+    World.remove(Game.getInstance().world, this.constraint);
   }
 }

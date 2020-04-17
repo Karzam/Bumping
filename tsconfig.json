@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "noImplicitAny": true,
-    "types": ["pixi.js"],
+    "types": ["matter-js"],
     "module": "commonjs",
     "sourceMap": true,
     "target": "es5",
