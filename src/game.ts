@@ -1,6 +1,8 @@
-import { Engine, World, Render, Runner, MouseConstraint } from "matter-js";
+import { Engine, World, Render, Runner, MouseConstraint, Bodies, Body } from "matter-js";
 import Player from "./player";
 import Ball from "./ball";
+import Ground from "./ground";
+import Opponent from "./opponent";
 
 export default class Game
 {
@@ -42,7 +44,9 @@ export default class Game
     const runner: Runner = Runner.create();
     Runner.run(runner, this.engine);
 
+    const ground: Ground = new Ground();
     const player: Player = new Player();
+    const opponent: Opponent = new Opponent();
     const ball: Ball = new Ball();
   }
 

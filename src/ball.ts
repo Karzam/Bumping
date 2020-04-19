@@ -16,8 +16,8 @@ export default class Ball
       restitution: 1,
       frictionAir: 0.02,
       isSensor: true,
-      collisionFilter: { category: 0x0002, mask: 0x0001 },
-      render: { fillStyle: '#e1b12c' },
+      collisionFilter: { group: 1, mask: 0x0002 },
+      render: { fillStyle: '#E1B12C' },
     });
 
     World.add(Game.getInstance().world, this.body);

@@ -1,4 +1,4 @@
-import { Body, Bodies, Constraint, World, Vector } from 'matter-js';
+import { Body, Bodies, Constraint, World, Vector, Events } from 'matter-js';
 import Game from './game';
 
 export default class Bumper
@@ -7,13 +7,13 @@ export default class Bumper
 
   private constraint: Constraint;
 
-  constructor(position: Vector) {
-    this.body = Bodies.circle(100, 100, 20, {
+  constructor(position: Vector, fillStyle: string) {
+    this.body = Bodies.circle(100, 100, 25, {
       restitution: 1,
       frictionAir: 0.02,
       position,
-      collisionFilter: { category: 0x0001, mask: 0x0002, group: 1 },
-      render: { fillStyle: '#079992' },
+      collisionFilter: { group: 1, mask: 0x0001 },
+      render: { fillStyle },
     });
   }
 
@@ -27,10 +27,11 @@ export default class Bumper
     this.constraint = Constraint.create({
       pointA,
       bodyB: this.body,
-      type: 'line',
       render: { strokeStyle: '#079992', type: 'line' },
       stiffness: 0.01,
     });
+
+    Events.on(this.constraint, 'tick', () => this.constraint.stiffness = 1);
 
     World.add(Game.getInstance().world, this.constraint);
   }
