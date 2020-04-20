@@ -1,18 +1,23 @@
-import { World, Events, Mouse, MouseConstraint, Vector } from 'matter-js';
-import Bumper from './bumper';
-import Game from './game';
-import Controller from './controller';
+import Bumper from './Bumper';
 
-export default class Opponent extends Controller
+export default class Opponent
 {
   constructor() {
-    const positions: Vector[] = [
+    this.instantiateBumbers();
+  }
+
+  private instantiateBumbers(): Bumper[] {
+    const positions: { x: number, y: number }[] = [
       { x: 600, y: 100 },
       { x: 750, y: 200 },
       { x: 750, y: 300 },
       { x: 600, y: 400 },
     ];
 
-    super(positions, '#B71540');
+    return positions.map(position => {
+      const bumper: Bumper = new Bumper(position, 'opponent_bumper');
+
+      return bumper;
+    })
   }
 }

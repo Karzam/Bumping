@@ -1,43 +1,24 @@
-import { Body, Bodies, Constraint, World, Vector, Events } from 'matter-js';
-import Game from './game';
+import { GameObjects, Physics } from 'phaser';
+import Stage from './Stage';
 
-export default class Bumper
+export default class Bumper extends Physics.Arcade.Image
 {
-  public body: Body;
+  constructor(position: { x: number, y: number }, texture: string) {
+    super(Stage.getInstance(), position.x, position.y, texture);
 
-  private constraint: Constraint;
+    this.setPosition(position.x, position.y);
 
-  constructor(position: Vector, fillStyle: string) {
-    this.body = Bodies.circle(100, 100, 25, {
-      restitution: 1,
-      frictionAir: 0.02,
-      position,
-      collisionFilter: { group: 1, mask: 0x0001 },
-      render: { fillStyle },
-    });
-  }
+    Stage.getInstance().physics.world.enableBody(this);
+    Stage.getInstance().children.add(this);
 
-  public drag(): void {
-    const { position } = this.body;
+    this.setCircle(31);
+    this.setDamping(true);
+    this.setCollideWorldBounds(true);
+    this.setDrag(0.97);
+    this.setFriction(0.6, 0.6);
+    this.setMass(100);
+    this.setBounce(0.1, 0.1)
 
-    this.body.isSensor = true;
-
-    const pointA: Vector = Vector.create(position.x, position.y);
-
-    this.constraint = Constraint.create({
-      pointA,
-      bodyB: this.body,
-      render: { strokeStyle: '#079992', type: 'line' },
-      stiffness: 0.01,
-    });
-
-    Events.on(this.constraint, 'tick', () => this.constraint.stiffness = 1);
-
-    World.add(Game.getInstance().world, this.constraint);
-  }
-
-  public release(): void {
-    this.body.isSensor = false;
-    World.remove(Game.getInstance().world, this.constraint);
+    Stage.getInstance().physics.add.collider(this, Stage.getInstance().children.list);
   }
 }

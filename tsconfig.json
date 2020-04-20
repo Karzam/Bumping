@@ -2,7 +2,8 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "noImplicitAny": true,
-    "types": ["matter-js"],
+    "typeRoots": ["./node_modules/phaser/types"],
+    "types": ["Phaser"],
     "module": "commonjs",
     "sourceMap": true,
     "target": "es5",

@@ -1,5 +1,5 @@
-import { Engine, World, Render, Runner, MouseConstraint, Bodies, Body } from "matter-js";
-import Game from "./game";
+import { GameObjects, Game } from "phaser";
+import Stage from "./Stage";
 
 export default class Ground
 {
@@ -26,13 +26,13 @@ export default class Ground
     ];
 
     positions.map(position => {
-      const border: Body = Bodies.rectangle(position.x, position.y, position.w, position.h, {
-        isStatic: true,
-        collisionFilter: { group: 1 },
-        render: { lineWidth: 2, fillStyle: '#5758BB', strokeStyle: '#5758BB' },
-      });
-
-      World.add(Game.getInstance().world, border);
+      Stage.getInstance().add.rectangle(
+        position.x,
+        position.y,
+        position.w,
+        position.h,
+        0x5758bb,
+      );
     });
   }
 }

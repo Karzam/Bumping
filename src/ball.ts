@@ -1,33 +1,19 @@
-import { Bodies, Body, World } from "matter-js";
-import Game from './game'
+import { GameObjects, Game } from 'phaser';
+import Stage from './Stage';
 
-export default class Ball
+export default class Ball extends GameObjects.Graphics
 {
-  private static instance: Ball;
-
-  private body: Body;
-
   constructor() {
-    if (!Ball.instance) {
-      Ball.instance = this;
-    }
+    super(Stage.getInstance());
 
-    this.body = Bodies.circle(450, 250, 20, {
-      restitution: 1,
-      frictionAir: 0.02,
-      isSensor: true,
-      collisionFilter: { group: 1, mask: 0x0002 },
-      render: { fillStyle: '#E1B12C' },
-    });
+    this.fillStyle(0xe1b12c);
+    this.fillCircle(0, 0, 25);
 
-    World.add(Game.getInstance().world, this.body);
-  }
+    this.setPosition(
+      Stage.getInstance().game.renderer.width / 2,
+      Stage.getInstance().game.renderer.height / 2
+    );
 
-  public static getInstance(): Ball {
-    return Ball.instance || new Ball();
-  }
-
-  public enable(): void {
-    this.body.isSensor = false;
+    Stage.getInstance().children.add(this);
   }
 }
