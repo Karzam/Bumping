@@ -15,9 +15,7 @@ export default class Opponent
     ];
 
     return positions.map(position => {
-      const bumper: Bumper = new Bumper(position, 'opponent_bumper');
-
-      return bumper;
+      return new Bumper(position, 'opponent_bumper');
     })
   }
 }

@@ -1,18 +1,19 @@
-import { GameObjects, Game } from 'phaser';
+import { Physics } from 'phaser';
 import Stage from './Stage';
 
-export default class Ball extends GameObjects.Graphics
+export default class Ball extends Physics.Matter.Image
 {
   constructor() {
-    super(Stage.getInstance());
+    const position: { x: number, y: number } = {
+      x: Stage.getInstance().game.renderer.width / 2,
+      y: Stage.getInstance().game.renderer.height / 2
+    };
 
-    this.fillStyle(0xe1b12c);
-    this.fillCircle(0, 0, 25);
+    super(Stage.getInstance().matter.world, position.x, position.y, 'ball');
 
-    this.setPosition(
-      Stage.getInstance().game.renderer.width / 2,
-      Stage.getInstance().game.renderer.height / 2
-    );
+    this.setBody({ type: 'circle', radius: 25 });
+    this.setFrictionAir(0.02);
+    this.setBounce(1);
 
     Stage.getInstance().children.add(this);
   }

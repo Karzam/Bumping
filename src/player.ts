@@ -17,9 +17,7 @@ export default class Player
     ];
 
     return positions.map(position => {
-      const bumper: DraggableBumper = new DraggableBumper(position, 'player_bumper');
-
-      return bumper;
+      return new DraggableBumper(position, 'player_bumper');
     })
   }
 }

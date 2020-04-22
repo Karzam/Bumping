@@ -8,11 +8,8 @@ const config = {
   height: 500,
   scene: [Stage],
   physics: {
-    default: 'arcade',
-    arcade: {
-      debug: true,
-      gravity: { x: 0, y: 0 },
-    }
+    default: 'matter',
+    matter: { debug: true },
   }
 };
 
