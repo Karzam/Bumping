@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+
+  > * {
+    width: 33.3%;
+  }
+
+  > :last-child {
+    text-align: right;
+  }
+
+  .countdown {
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    text-transform: uppercase;
+    font-size: 32px;
+    color: white;
+  }
+}

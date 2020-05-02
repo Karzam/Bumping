@@ -44,8 +44,8 @@ export default class DraggableBumper extends Bumper
     this.dragged = false;
     this.line.setVisible(false);
 
-    const angle = Math.Angle.Between(this.x, this.y, this.initialPosition.x, this.initialPosition.y);
-    const distance = Math.Distance.Between(this.x, this.y, this.initialPosition.x, this.initialPosition.y);
+    const angle: number = Math.Angle.Between(this.x, this.y, this.initialPosition.x, this.initialPosition.y);
+    const distance: number = Math.Distance.Between(this.x, this.y, this.initialPosition.x, this.initialPosition.y);
 
     Stage.getInstance().matter.applyForceFromAngle(this, distance * 0.001, angle);
   }
